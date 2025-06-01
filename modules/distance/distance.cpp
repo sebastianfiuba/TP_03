@@ -1,65 +1,52 @@
+
 //=====[Libraries]=============================================================
 
-#include "mbed.h"
 #include "arm_book_lib.h"
+#include "mbed.h"
 
-#include "userinterface.h"
 #include "syshandler.h"
-#include "potsens.h"
-#include "ledsuser.h"
-#include "buttonsuser.h"
+#include "ultrasonic.h"
+#include "distance.h"
 
 
 //=====[Declaration of private defines]========================================
 
-
 //=====[Declaration of private data types]=====================================
-
 
 //=====[Declaration and initialization of public global objects]===============
 
+HCSR04 us_sensor(PIN_US_TRIG, PIN_US_ECHO);
 
 //=====[Declaration of external public global variables]=======================
 
-
 //=====[Declaration and initialization of public global variables]=============
-
 
 //=====[Declaration and initialization of private global variables]============
 
-
 //=====[Declarations (prototypes) of private functions]========================
-
 
 //=====[Implementations of public functions]===================================
 
-void userInterfaceInit(){
+void initDistance(){
+//start sensor
 
-  initUserLeds();
-  initButtons();
-  initDistance();
-
-  return;
-  
-}
-
-void userInterfaceUpdate(sys_t* sys_a){
-  
-  updateButtons(sys_a);
-  updateUserleds(sys_a);
-  updateSens(sys_a);
-  updateDistance(sys_a);
-
-  return;
+    us_sensor.start();
 
 }
+void updateDistance(sys_t* sys_a){
+
+    int dist = (int) us_sensor.readDistance();
+
+    if(dist != getDistSysH(sys_a))
+        updateDistSysH(sys_a, dist);
+    
+    if(getBut1SysH(sys_a) && getBut2SysH(sys_a))
+        updateSensDistSysH(sys_a, dist);
+    //check state
+    //switch betwen sens or measured dist
+    //add value where should be 
+
+}
+
 
 //=====[Implementations of private functions]==================================
-
-
-
-
-
-
-
-

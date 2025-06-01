@@ -3,7 +3,7 @@
 #include "mbed.h"
 #include "arm_book_lib.h"
 
-#include "eventlog.h"
+#include "syshandler.h"
 #include "potsens.h"
 
 
@@ -33,14 +33,14 @@ AnalogIn limitPot(A0);
 
 
 
-void updateSens(log_t* sens){
+void updateSens(sys_t* sys_b){
   
-  int limitTemp_ant = getSensLog(sens);
+  int limitTemp_ant = getSensSysH(sys_b);
   float potReading  = limitPot.read();
   int limitTemp  = (int)(potReading * (MAX_TEMP - BASE_TEMP) + BASE_TEMP);
 
   if (limitTemp_ant != limitTemp)
-    updateSensLog(sens,limitTemp);
+    updateSensSysH(sys_b, limitTemp);
 
   return;
 }

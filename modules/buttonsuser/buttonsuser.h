@@ -4,14 +4,14 @@
 #define _BUTTONSUSER_H_
 
 //=====[Declaration of public defines]=========================================
-#include "eventlog.h"
+#include "syshandler.h"
 //=====[Declaration of public data types]======================================
 
 
 //=====[Declarations (prototypes) of public functions]=========================
 
 void initButtons();
-void updateButtons(log_t* events);
+void updateButtons(sys_t* sys_b);
 
 //=====[#include guards - end]=================================================
 

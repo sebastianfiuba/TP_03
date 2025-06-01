@@ -3,7 +3,7 @@
 #include "mbed.h"
 #include "arm_book_lib.h"
 
-#include "eventlog.h"
+#include "syshandler.h"
 #include "tempdht.h"
 #include "dht.h"
 
@@ -13,7 +13,7 @@
 
 //=====[Declaration and initialization of public global objects]===============
 
-DHT sensor(D4, DHT11);
+DHT sensor(PIN_DHT, DHT11);
 
 //=====[Declaration of external public global variables]=======================
 
@@ -30,13 +30,13 @@ DHT sensor(D4, DHT11);
 
 
 
-void updateSensorDHT(log_t* sensorlog){
+void updateSensorDHT(sys_t* sys_b){
     static int error = 0;
     if( 0 == (error = sensor.readData())){
         int c = (int) sensor.ReadTemperature(CELCIUS);
-        updateTempLog(sensorlog,c);
+        updateTempSysH(sys_b,c);
         int h = (int)  sensor.ReadHumidity();
-        updateHumLog(sensorlog, h);
+        updateHumSysH(sys_b, h);
     }
   return;
 }

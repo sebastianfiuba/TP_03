@@ -1,17 +1,30 @@
 //=====[#include guards - begin]===============================================
-
-#ifndef _LEDSUSER_H_
-#define _LEDSUSER_H_
-
+#ifndef _SERVO_H_
+#define _SERVO_H_
 //=====[Declaration of public defines]=========================================
-#include "syshandler.h"
+#include "mbed.h"
+#include "arm_book_lib.h"
+
 
 //=====[Declaration of public data types]======================================
 
+class servo {
+public:
+    servo (PinName pwmPin);
+    void setAngle(float angle); // ángulo en grados (0 a 180)
+
+private:
+    PwmOut pwm;
+};
+
 //=====[Declarations (prototypes) of public functions]=========================
-void updateUserleds(sys_t *sys_b);
-void initUserLeds();
 
 //=====[#include guards - end]=================================================
 
-#endif // _LEDSUSER_H_
+
+#endif// _SERVO_H_
+
+
+
+
+

@@ -1,9 +1,13 @@
 //=====[Libraries]=============================================================
+#include "lock.h"
+
 
 #include "arm_book_lib.h"
 #include "mbed.h"
-#include "eventlog.h"
-#include "lock.h"
+#include "syshandler.h"
+#include "servo.h"
+
+
 
 //=====[Declaration of private defines]========================================
 
@@ -13,7 +17,7 @@
 
 //=====[Declaration and initialization of public global objects]===============
 
-DigitalOut lockOut(LED1);
+servo servo(PIN_SERVO); // Conectar el servo al pin D6
 
 //=====[Declaration of external public global variables]=======================
 
@@ -22,7 +26,7 @@ DigitalOut lockOut(LED1);
 //=====[Declaration and initialization of private global variables]============
 
 //=====[Declarations (prototypes) of private functions]========================
-static bool checkLockConditions(log_t* lock);
+static bool checkLockConditions(sys_t* sys_a);
 //=====[Implementations of public functions]===================================
 
 void initLock(){
@@ -30,19 +34,19 @@ void initLock(){
   changeLock(INIT_LOCK_VALUE);
 }
 
-void updateLock(log_t* locklog){
+void updateLock(sys_t* sys_a){
 
   
-  bool statelock = checkLockConditions(locklog);
+  bool statelock = checkLockConditions(sys_a);
 
-  bool changeslock = checkChangesLockLog(locklog, statelock);
+  bool changeslock = checkChangesLockSysH(sys_a, statelock);
 
-  if(changeslock  &&  (getManualLog(locklog) != CLOSED_VALUE)){
-    if(getBut1Log(locklog))
-      updateManuallog(locklog, !OPEN_VALUE);
-      changeLock(statelock);
-      updateLogLock(locklog, statelock); //changes true
-      updateChangesLog(locklog, true);
+  if(changeslock  &&  (getManualSysH(sys_a) == OPEN_VALUE)){
+    if(getBut1SysH(sys_a))
+        updateManualSysH(sys_a, OPEN_VALUE);
+    changeLock(statelock);
+    updateSysHLock(sys_a, statelock); //changes true
+    updateChangesSysH(sys_a, true);
   }
   return;
 }
@@ -50,29 +54,42 @@ void updateLock(log_t* locklog){
 
 void changeLock(bool state){
   
-  lockOut = state;
+  if(state != CLOSED_VALUE){
+      servo.setAngle(OPEN_ANGLE);
+      return;
+  }
+  servo.setAngle(CLOSED_ANGLE);
   return;
 }
 
 //=====[Implementations of private functions]==================================
 
-static bool checkLockConditions(log_t* lock){
+static bool checkLockConditions(sys_t* sys_a){
 
-  if(getBut1Log(lock)){
+  if(getBut1SysH(sys_a)){
     return OPEN_VALUE;
   } // open
 
-  if(getBut2Log(lock)){// close
-    updateManuallog(lock, !CLOSED_VALUE);
+  if(getBut2SysH(sys_a)){// close
+    updateManualSysH(sys_a, CLOSED_VALUE);
     return CLOSED_VALUE;
   }
-  int sens_aux = getSensLog(lock);
-  int temp_aux = getTempLog(lock);
+  if(getSensDistSysH(sys_a) >= getDistSysH(sys_a));
+    return OPEN_VALUE;
+  
+  int sens_aux = getSensSysH(sys_a);
+  int temp_aux = getTempSysH(sys_a);
   if(LOW_LIMIT_TEMP >= temp_aux || temp_aux >= sens_aux)
     return OPEN_VALUE;
-  int hum = getHumLog(lock);
+  int hum = getHumSysH(sys_a);
   if(hum >= HIGH_LIMIT_HUM)
     return OPEN_VALUE;
 
   return CLOSED_VALUE;
 }
+
+
+
+
+
+            

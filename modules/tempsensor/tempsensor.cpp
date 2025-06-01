@@ -3,7 +3,7 @@
 #include "arm_book_lib.h"
 #include "mbed.h"
 #include "tempsensor.h"
-#include "eventlog.h"
+#include "syshandler.h"
 
 
 //=====[Declaration of private defines]========================================
@@ -36,15 +36,15 @@ void initSensor(dht11_t* sensor, PinName pin) {
   return;
 }
 
-void updateSensor(log_t* sensorlog, dht11_t* sensor1){
+void updateSensor(sys_t* sys_b, dht11_t* sensor1){
 
   if(false == dht11Read(sensor1)){
     return;
   }
 
 
-  updateTempLog(sensorlog, getSensorTemp(sensor1));
-  updateHumLog(sensorlog, getSensorHum(sensor1));
+  updateTempSysH(sys_b, getSensorTemp(sensor1));
+  updateHumSysH(sys_b, getSensorHum(sensor1));
   
   return;
     

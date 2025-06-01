@@ -3,7 +3,7 @@
 #include "arm_book_lib.h"
 #include "mbed.h"
 
-#include "eventlog.h"
+#include "syshandler.h"
 #include "ledsuser.h" 
 
 //=====[Declaration of private defines]========================================
@@ -35,11 +35,11 @@ void initUserLeds(){
   
 }
 
-void updateUserleds(log_t* led){
-  bool state = getLockLog(led);
-  if(getChangesFlagLog(led)){
+void updateUserleds(sys_t* sys_b){
+  bool state = getLockSysH(sys_b);
+  if(getChangesFlagSysH(sys_b)){
     changeLeds(state);
-    updateLedsLog(led, state);
+    updateLedsSysH(sys_b, state);
   }
   return;
 }

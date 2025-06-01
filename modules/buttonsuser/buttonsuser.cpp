@@ -4,7 +4,7 @@
 #include "arm_book_lib.h"
 #include "mbed.h"
 
-#include "eventlog.h"
+#include "syshandler.h"
 #include "buttonsuser.h"
 
 
@@ -14,10 +14,10 @@
 
 //=====[Declaration and initialization of public global objects]===============
 
+//busin no parece necesario
 
-
-DigitalIn openButton(D2);
-DigitalIn closeButton(D3);
+DigitalIn openButton(PIN_OPEN_BUTTON);
+DigitalIn closeButton(PIN_CLOSE_BUTTON);
 
 //=====[Declaration of external public global variables]=======================
 
@@ -26,8 +26,8 @@ DigitalIn closeButton(D3);
 //=====[Declaration and initialization of private global variables]============
 
 //=====[Declarations (prototypes) of private functions]========================
-static bool debounceButtons(log_t* check);
-static void readButtons(log_t* readlog);
+static bool debounceButtons(sys_t* sys);
+static void readButtons(sys_t* readlog);
 
 
 
@@ -41,15 +41,15 @@ void initButtons(){
   return;
 }
 
-void updateButtons(log_t* events){
+void updateButtons(sys_t* sys_b){
 
-  log_t first_aux;
-  initLog(&first_aux);
+  sys_t first_aux;
+  initSysH(&first_aux);
   readButtons(&first_aux);
   
-    if (!checkLogButtons(&first_aux, events))
+    if (!checkSysHButtons(&first_aux, sys_b))
       if (debounceButtons(&first_aux))
-        updateLogButtons(&first_aux, events);
+        updateSysHButtons(&first_aux, sys_b);
   
     
   return;
@@ -57,25 +57,25 @@ void updateButtons(log_t* events){
 
 
 //=====[Implementations of private functions]==================================
-
-static bool debounceButtons(log_t* check){
+//interrupts?
+static bool debounceButtons(sys_t* sys_c){
 
   
     delay(DEBOUNCE_TIME_MS);
-    log_t second;
+    sys_t second;
     readButtons(&second);
 
 
-    return checkLogButtons(check, &second);
+    return checkSysHButtons(sys_c, &second);
 
 }
 
-static void readButtons(log_t* readlog){
+static void readButtons(sys_t* sys_d){
 
     bool button1 = openButton;
     bool button2 = closeButton;
     
-    makeLogButtons(readlog, button1, button2);
+    makeSysHButtons(sys_d, button1, button2);
 
     return;
 }

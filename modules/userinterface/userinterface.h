@@ -5,14 +5,14 @@
 
 //=====[Declaration of public defines]=========================================
 
-#include "eventlog.h"
+#include "syshandler.h"
 #include "ledsuser.h"
 //=====[Declaration of public data types]======================================
 
 //=====[Declarations (prototypes) of public functions]=========================
 
 void userInterfaceInit();
-void userInterfaceUpdate(log_t* loginter);
+void userInterfaceUpdate(sys_t* sys_a);
 
 //=====[#include guards - end]=================================================
 

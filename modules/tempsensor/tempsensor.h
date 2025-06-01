@@ -2,7 +2,7 @@
 #ifndef _TEMPSENSOR_H_
 #define _TEMPSENSOR_H_
 
-#include "eventlog.h"
+#include "syshandler.h"
 #include "mbed.h"
 
 //=====[Declaration of public defines]=========================================
@@ -20,7 +20,7 @@ typedef struct {
 //=====[Declarations (prototypes) of public functions]=========================
 
 void initSensor(dht11_t* sensor, PinName pin);
-void updateSensor(log_t* sensorlog, dht11_t* sensor1);
+void updateSensor(sys_t* sys_b, dht11_t* sensor1);
 
 //=====[#include guards - end]=================================================
 
