@@ -26,6 +26,7 @@ void initSysH(sys_t* sysh){
   sysh->but2 = false;
   sysh->led1 = !INIT_LOCK_VALUE; // open
   sysh->led2 = INIT_LOCK_VALUE;
+  sysh->led3 = INIT_DIST_MODE;
   sysh->lock = INIT_LOCK_VALUE;
   sysh->changes = INIT_CHANGES_VALUE;
   sysh->temp = 0;
@@ -33,6 +34,7 @@ void initSysH(sys_t* sysh){
   sysh->sens = 0;
   sysh->dist = 0;
   sysh->sensdist = INIT_SENSDIST_VALUE;
+  sysh->diststate = INIT_DIST_MODE;
   sysh->manual = INIT_LOCK_VALUE;
   return;
   
@@ -132,10 +134,11 @@ void updateSensDistSysH(sys_t *sysh, int dist_a){
   return;
 }
 
-void updateLedsSysH(sys_t* sysh, bool statelog){
+void updateLedsSysH(sys_t* sysh, bool statelog, bool statedist){
 
   sysh->led1 = !statelog;
   sysh->led2 = statelog;
+  sysh->led3 = statedist;
   
   return;
 }
@@ -143,6 +146,12 @@ void updateLedsSysH(sys_t* sysh, bool statelog){
 void updateChangesSysH(sys_t* sysh, bool statechanges){
 
   sysh->changes = statechanges;
+  
+  return;
+}
+void updateDistModeSysH(sys_t* sysh, bool statedist){
+
+  sysh->diststate = statedist;
   
   return;
 }
@@ -170,6 +179,10 @@ bool getLed2SysH(const sys_t* sysh){
   
   return sysh->led2;
 }
+bool getLed3SysH(const sys_t* sysh){
+  
+  return sysh->led3;
+}
 int getSensSysH(const sys_t* sysh){
   
   return sysh->sens;
@@ -196,6 +209,12 @@ int getSensDistSysH(const sys_t *sysh){
 bool getLockSysH(const sys_t* sysh){
   
   return sysh->lock;
+}
+
+
+bool getDistModeSysH(const sys_t* sysh){
+
+    return sysh->diststate;
 }
 
 bool getChangesFlagSysH(const sys_t* sysh){

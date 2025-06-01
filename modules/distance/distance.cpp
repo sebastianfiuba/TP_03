@@ -40,11 +40,20 @@ void updateDistance(sys_t* sys_a){
     if(dist != getDistSysH(sys_a))
         updateDistSysH(sys_a, dist);
     
-    if(getBut1SysH(sys_a) && getBut2SysH(sys_a))
+    if(getBut1SysH(sys_a) && getBut2SysH(sys_a)){
         updateSensDistSysH(sys_a, dist);
-    //check state
-    //switch betwen sens or measured dist
-    //add value where should be 
+        if(!getChangesFlagSysH(sys_a)){
+            updateChangesSysH(sys_a, true);
+            updateDistModeSysH(sys_a, true);
+        }
+        return;
+    }
+    if(getDistModeSysH(sys_a)){
+        updateChangesSysH(sys_a, true);
+        updateDistModeSysH(sys_a, false);
+    }
+
+    return;
 
 }
 

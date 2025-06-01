@@ -11,7 +11,6 @@
 
 //=====[Declaration of private defines]========================================
 
-#define HIGH_LIMIT_HUM 80
 
 //=====[Declaration of private data types]=====================================
 
@@ -74,7 +73,7 @@ static bool checkLockConditions(sys_t* sys_a){
     updateManualSysH(sys_a, CLOSED_VALUE);
     return CLOSED_VALUE;
   }
-  if(getSensDistSysH(sys_a) >= getDistSysH(sys_a));
+  if(getSensDistSysH(sys_a) >= getDistSysH(sys_a))
     return OPEN_VALUE;
   
   int sens_aux = getSensSysH(sys_a);

@@ -8,7 +8,7 @@
 #include "potsens.h"
 #include "ledsuser.h"
 #include "buttonsuser.h"
-
+#include "distance.h"
 
 //=====[Declaration of private defines]========================================
 
@@ -35,8 +35,8 @@
 
 void userInterfaceInit(){
 
-  initUserLeds();
   initButtons();
+  initUserLeds();
   initDistance();
 
   return;
@@ -46,9 +46,9 @@ void userInterfaceInit(){
 void userInterfaceUpdate(sys_t* sys_a){
   
   updateButtons(sys_a);
-  updateUserleds(sys_a);
   updateSens(sys_a);
   updateDistance(sys_a);
+  updateUserleds(sys_a);
 
   return;
 

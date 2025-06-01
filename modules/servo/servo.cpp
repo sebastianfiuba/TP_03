@@ -39,7 +39,7 @@ void servo::setAngle(float angle) {
     if (angle > HIGH_LIMIT_ANGLE) angle = HIGH_LIMIT_ANGLE;
 
     // Convertir ángulo a ancho de pulso (duty cycle)
-    float pulseWidthMs = 1.0f + (angle / 180.0f)/2; // entre 1 ms y 1.5 ms
+    float pulseWidthMs = 1.0f + (angle / HIGH_LIMIT_ANGLE)/2; // entre 1 ms y 1.5 ms
     pwm.pulsewidth_ms(pulseWidthMs);
 }
 

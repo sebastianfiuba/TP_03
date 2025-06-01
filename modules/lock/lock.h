@@ -7,9 +7,6 @@
 
 //=====[Declaration of public defines]=========================================
 
-#define OPEN_ANGLE 180.0f
-#define CLOSED_ANGLE 90.0f
-
 //=====[Declaration of public data types]======================================
 
 //=====[Declarations (prototypes) of public functions]=========================

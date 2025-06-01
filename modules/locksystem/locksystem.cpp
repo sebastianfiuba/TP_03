@@ -6,7 +6,7 @@
 
 
 #include "tempdht.h" 
-#include "tempsensor.h"
+
 
 
 #include "syshandler.h"
@@ -44,10 +44,9 @@ sys_t sys;
 void  locksysInit(){
 
   userInterfaceInit();
-  initLog(&log);
-  initSysH(&sys)
+  initSysH(&sys);
+  initLog(&sys, &log);
   initLock();
- // initSensor(&ths, DHTPIN);
   pcSerialComInit();
 }
 
@@ -57,7 +56,7 @@ void locksysUpdate(){
   updateSensorDHT(&sys);
   updateLock(&sys);
   userInterfaceUpdate(&sys);
-  pcSerialComUpdate(&sys);
+  pcSerialComUpdate(&sys, &log);
 
   delay(SYSTEM_TIME_INCREMENT_MS);
 

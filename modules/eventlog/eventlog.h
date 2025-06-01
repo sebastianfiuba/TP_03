@@ -14,6 +14,7 @@ typedef struct{
   bool but2;
   bool led1;
   bool led2;
+  bool led3;
   bool lock;  
   bool changes;
   int temp;
@@ -21,11 +22,12 @@ typedef struct{
   int sens;
   int dist;
   int sensdist;
+  bool diststate;
   bool manual;
 }log_t;
 //=====[Declarations (prototypes) of public functions]=========================
 
-void updateLog(sys_t* sys_c, log_t* log_c);
+void updateLog(const sys_t* sys_c, log_t* log_c);
 
 //=====[#include guards - end]=================================================
 

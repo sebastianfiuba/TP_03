@@ -31,7 +31,7 @@ UnbufferedSerial uartUsb(USBTX, USBRX, 115200);
 
 //=====[Declarations (prototypes) of private functions]========================
 static void pcSerialComStringRead(char* str, int strLength);
-static void pcSerialComCommandUpdate(char receivedChar, sys_t* sys_a);
+static void pcSerialComCommandUpdate(char receivedChar, sys_t* sys_a, log_t* log_a);
 static void availableCommands();
 static void commandShowCurrentLockState(const sys_t* sys_a);
 static void commandShowCurrentButtonsState(const sys_t* sys_a);
@@ -71,8 +71,8 @@ void pcSerialComUpdate(sys_t* sys_a, log_t* log_a){
   if( receivedChar != '\0' ) {
     pcSerialComCommandUpdate(receivedChar, sys_a, log_a);
   }    
-  if(getChangesFlagSysh(sys_a)){
-    commandShowCurrentLog(log_a);
+  if(getChangesFlagSysH(sys_a)){
+    commandShowCurrentLog(log_a, sys_a);
     updateChangesSysH(sys_a, false);
     updateLog(sys_a, log_a);
   }
@@ -169,6 +169,12 @@ static void commandShowCurrentLedsState(const sys_t* sys_a){
   else{
     pcSerialComStringWrite( "The Led 2 is off\r\n");
   }
+  if (getLed3SysH(sys_a)){
+    pcSerialComStringWrite( "The Led 3 is on\r\n");
+  }
+  else{
+    pcSerialComStringWrite( "The Led 3 is off\r\n");
+  }
   return;
 }
 
@@ -203,11 +209,16 @@ static void commandShowCurrentDist(const sys_t* sys_a){
   char str[100] = "";
   sprintf ( str, "Distance: %d %% \r\n", getDistSysH(sys_a) );
   pcSerialComStringWrite( str ); 
-  return
+  if(getDistModeSysH(sys_a)){
+    pcSerialComStringWrite("Distance and limits are being meseaured\r\n");
+    return;
+  }
+    pcSerialComStringWrite("Only distance is being meseaured\r\n");
+  return;
 }
 static void commandOpenLock(sys_t* sys_a){
   updateSysHLock(sys_a, OPEN_VALUE);
-  updateManuallog(sys_a, OPEN_VALUE);
+  updateManualSysH(sys_a, OPEN_VALUE);
   updateChangesSysH(sys_a, true);
   changeLock(OPEN_VALUE);
   updateUserleds(sys_a);
@@ -217,7 +228,7 @@ static void commandOpenLock(sys_t* sys_a){
 static void commandCloseLock(sys_t* sys_a){
   
   updateSysHLock(sys_a, CLOSED_VALUE);
-  updateManuallog(sys_a, CLOSED_VALUE);
+  updateManualSysH(sys_a, CLOSED_VALUE);
   updateChangesSysH(sys_a, true);
   changeLock(CLOSED_VALUE);
   updateUserleds(sys_a);
@@ -284,6 +295,7 @@ static void commandShowCurrentLog(log_t* log_b, const sys_t* sys_a){
   commandShowCurrentTemp(sys_a);
   commandShowCurrentHum(sys_a);
   commandShowCurrentSens(sys_a);
+  commandShowCurrentDist(sys_a);
   commandShowDateAndTime();
   pcSerialComStringWrite(strf);
   return;

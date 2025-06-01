@@ -3,6 +3,8 @@
 #ifndef _POTSENS_H_
 #define _POTSENS_H_
 
+
+#include "syshandler.h"
 //=====[Declaration of public defines]=========================================
 
 //#define SYSTEM_TIME_INCREMENT_MS   10
