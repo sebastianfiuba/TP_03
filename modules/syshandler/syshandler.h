@@ -12,7 +12,7 @@
 #define LOW_LIMIT_TEMP 15
 #define MAX_HUM 80
 #define HIGH_LIMIT_HUM MAX_HUM
-#define INIT_SENSDIST_VALUE 50
+#define INIT_SENSDIST_VALUE 25
 #define INIT_CHANGES_VALUE true
 #define INIT_DIST_MODE false
 
@@ -24,9 +24,10 @@
 #define PIN_OPEN_BUTTON D2
 #define PIN_CLOSE_BUTTON D3
 #define PIN_DHT D4
-#define PIN_US_TRIG D5
-#define PIN_US_ECHO D6
-#define PIN_SERVO D7
+#define PIN_SERVO D5
+#define PIN_US_TRIG D6
+#define PIN_US_ECHO D7
+
 
 //=====[Declaration of public data types]======================================
 typedef struct{

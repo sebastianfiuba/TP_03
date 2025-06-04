@@ -28,6 +28,7 @@ typedef struct{
 //=====[Declarations (prototypes) of public functions]=========================
 
 void updateLog(const sys_t* sys_c, log_t* log_c);
+void initLog(const sys_t* sys_a, log_t* log_a);
 
 //=====[#include guards - end]=================================================
 

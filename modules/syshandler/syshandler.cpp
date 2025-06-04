@@ -91,7 +91,7 @@ void updateSysHLock(sys_t* sysh, const bool statelock){
   return;
 }
 
-void updateManuallog(sys_t* sysh, const bool state){
+void updateManualSysH(sys_t* sysh, const bool state){
 
   sysh->manual = state;
   

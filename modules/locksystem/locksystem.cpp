@@ -30,7 +30,7 @@
 //=====[Declaration and initialization of public global objects]===============
 
 //=====[Declaration of external public global variables]=======================
-log_t log;
+log_t syslog;
 sys_t sys;
 //dht11_t ths;
 //=====[Declaration and initialization of public global variables]=============
@@ -45,7 +45,7 @@ void  locksysInit(){
 
   userInterfaceInit();
   initSysH(&sys);
-  initLog(&sys, &log);
+  initLog(&sys, &syslog);
   initLock();
   pcSerialComInit();
 }
@@ -56,7 +56,7 @@ void locksysUpdate(){
   updateSensorDHT(&sys);
   updateLock(&sys);
   userInterfaceUpdate(&sys);
-  pcSerialComUpdate(&sys, &log);
+  pcSerialComUpdate(&sys, &syslog);
 
   delay(SYSTEM_TIME_INCREMENT_MS);
 

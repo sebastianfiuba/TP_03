@@ -11,6 +11,8 @@
 #define LOW_LIMIT_ANGLE 0.0f
 #define HIGH_LIMIT_ANGLE 180.0f
 
+#define MICRO_TO_MILI 1000
+
 //=====[Declaration of private data types]=====================================
 
 
@@ -39,8 +41,8 @@ void servo::setAngle(float angle) {
     if (angle > HIGH_LIMIT_ANGLE) angle = HIGH_LIMIT_ANGLE;
 
     // Convertir ángulo a ancho de pulso (duty cycle)
-    float pulseWidthMs = 1.0f + (angle / HIGH_LIMIT_ANGLE)/2; // entre 1 ms y 1.5 ms
-    pwm.pulsewidth_ms(pulseWidthMs);
+    float pulseWidthMs = 0.5f + (angle / HIGH_LIMIT_ANGLE)*2; // entre 1 ms y 1.5 ms
+    pwm.pulsewidth_us(pulseWidthMs*MICRO_TO_MILI);
 }
 
 

@@ -2,7 +2,7 @@
 #ifndef _TEMPSENSOR_H_
 #define _TEMPSENSOR_H_
 
-#include "eventlog.h"
+#include "syshandler.h"
 
 //=====[Declaration of public defines]=========================================
 
@@ -11,7 +11,7 @@
 
 //=====[Declarations (prototypes) of public functions]=========================
 
-void updateSensorDHT(log_t* sensorlog);
+void updateSensorDHT(sys_t* sys_b);
 
 //=====[#include guards - end]=================================================
 

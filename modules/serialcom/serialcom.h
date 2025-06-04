@@ -17,7 +17,7 @@ char pcSerialComCharRead();
 
 void pcSerialComStringWrite(const char* str);
 
-void pcSerialComUpdate(log_t* loga);
+void pcSerialComUpdate(sys_t* sys_a, log_t* log_a);
 
 bool pcSerialComCodeCompleteRead();
 

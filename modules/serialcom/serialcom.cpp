@@ -104,6 +104,7 @@ static void pcSerialComCommandUpdate(char receivedChar, sys_t* sys_a, log_t* log
     case 'c': case 'C': commandCloseLock(sys_a); break;
     case 't': case 'T': commandShowCurrentTemp(sys_a); break;
     case 'm': case 'M': commandShowCurrentSens(sys_a); break;
+    case 'f': case 'F': commandShowCurrentDist(sys_a); break;
     case 'h': case 'H': commandShowCurrentHum(sys_a); break;
     case 's': case 'S': commandSetDateAndTime(); break;
     case 'd': case 'D': commandShowDateAndTime(); break;
@@ -207,7 +208,7 @@ static void commandShowCurrentSens(const sys_t* sys_a){
 static void commandShowCurrentDist(const sys_t* sys_a){
 
   char str[100] = "";
-  sprintf ( str, "Distance: %d %% \r\n", getDistSysH(sys_a) );
+  sprintf ( str, "Distance: %d cm \r\n", getDistSysH(sys_a) );
   pcSerialComStringWrite( str ); 
   if(getDistModeSysH(sys_a)){
     pcSerialComStringWrite("Distance and limits are being meseaured\r\n");
@@ -285,7 +286,7 @@ static void commandShowCurrentLog(log_t* log_b, const sys_t* sys_a){
 
   updateLog(sys_a, log_b);
 
-  char stri [100] = "start of message:\r\n";
+  char stri [100] = "\r\nstart of message:\r\n";
   char strf [100] = "end of message.\r\n";
   pcSerialComStringWrite( stri );
 

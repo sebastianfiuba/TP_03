@@ -40,7 +40,7 @@ void updateLock(sys_t* sys_a){
 
   bool changeslock = checkChangesLockSysH(sys_a, statelock);
 
-  if(changeslock  &&  (getManualSysH(sys_a) == OPEN_VALUE)){
+  if(changeslock  &&  (getManualSysH(sys_a) == CLOSED_VALUE)){
     if(getBut1SysH(sys_a))
         updateManualSysH(sys_a, OPEN_VALUE);
     changeLock(statelock);
@@ -52,7 +52,7 @@ void updateLock(sys_t* sys_a){
 
 
 void changeLock(bool state){
-  
+ 
   if(state != CLOSED_VALUE){
       servo.setAngle(OPEN_ANGLE);
       return;
